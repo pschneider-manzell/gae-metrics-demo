@@ -1,0 +1,43 @@
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.google.appengine:gradle-appengine-plugin:1.9.6'
+    }
+
+}
+
+apply plugin: 'war'
+apply plugin: 'appengine'
+
+ext.sourceCompatibility = 1.7
+ext.targetCompatibility = 1.7
+
+repositories {
+        mavenLocal()
+        maven { url "http://repo.maven.apache.org/maven2" }
+    }
+
+appengine {
+    httpPort = 8080
+    downloadSdk = true
+    jvmFlags = ['-Xms1536m', '-Xmx1536M', '-server']
+    daemon = false
+    appcfg {
+        email = 'p.schneider.manzell@gmail.com'
+    }
+}
+
+dependencies {
+    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.6'
+    compile group: 'com.google.appengine', name: 'appengine-api-1.0-sdk', version: '1.9.6'
+    compile group: 'com.google.appengine', name: 'appengine-endpoints', version: '1.9.6'
+    compile group:'com.codahale.metrics',name:'metrics-core',version:'3.0.1'
+    compile group:'com.codahale.metrics',name:'metrics-servlets',version:'3.0.1'
+    providedCompile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
+}
